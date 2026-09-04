@@ -1,0 +1,15 @@
+.venv/
+.venv-*/
+__pycache__/
+*.pyc
+*.pyo
+.buildozer/
+bin/
+.gradle/
+*.log
+.android/
+session-ses_fad0.md
+CONTEXTO.md
+.env
+*.key
+*.pem
