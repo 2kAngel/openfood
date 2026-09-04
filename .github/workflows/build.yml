@@ -44,6 +44,21 @@ jobs:
           rm -rf ~/.buildozer/android/platform/android-ndk*
           ls -lh ~/.buildozer/android/platform/ 2>&1 | head -20 || true
 
+      - name: Pre-download freetype workaround (Savannah 502)
+        run: |
+          mkdir -p ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/packages/freetype
+          echo "Trying alternative mirrors for freetype..."
+          wget -q https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.14.1.tar.gz -O /tmp/freetype-2.14.1.tar.gz && echo "Savannah mirror OK" || \
+          wget -q https://downloads.sourceforge.net/project/freetype/freetype2/2.14.1/freetype-2.14.1.tar.gz -O /tmp/freetype-2.14.1.tar.gz && echo "SourceForge OK" || \
+          wget -q https://github.com/freetype/freetype/archive/VER-2-14-1.tar.gz -O /tmp/freetype-2.14.1.tar.gz && echo "GitHub OK" || echo "All mirrors failed"
+          if [ -f /tmp/freetype-2.14.1.tar.gz ]; then
+            cp /tmp/freetype-2.14.1.tar.gz ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/packages/freetype/freetype-2.14.1.tar.gz || true
+            ls -lh ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/packages/freetype/ || true
+            ls -lh /tmp/freetype-2.14.1.tar.gz || true
+          fi
+          mkdir -p ~/.buildozer/android/platform/build-armeabi-v7a/packages/freetype 2>&1 || true
+          cp /tmp/freetype-2.14.1.tar.gz ~/.buildozer/android/platform/build-armeabi-v7a/packages/freetype/freetype-2.14.1.tar.gz 2>&1 || true
+
       - name: Build APK
         run: |
           buildozer android debug || echo "First build attempt finished (may need license fix)"
