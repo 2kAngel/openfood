@@ -45,9 +45,20 @@ jobs:
           echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
           echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
           echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ~/.buildozer/android/platform/android-sdk/licenses/android-googletv-license
-          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
-          cat ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license || true
           ls -lh ~/.buildozer/android/platform/android-sdk/licenses/ || true
+          ls -R ~/.buildozer/android/platform/android-sdk 2>&1 | head -100 || true
+          find ~/.buildozer -name sdkmanager 2>&1 | head -20 || true
+
+      - name: Fix sdkmanager path for new cmdline-tools
+        run: |
+          ls -lh ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager 2>&1 || echo "tools sdkmanager missing"
+          ls -lh ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager 2>&1 || echo "cmdline-tools sdkmanager missing"
+          if [ ! -f ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager ] && [ -f ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ]; then
+            mkdir -p ~/.buildozer/android/platform/android-sdk/tools/bin
+            ln -sf ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
+            echo "Fixed symlink"
+          fi
+          ls -lh ~/.buildozer/android/platform/android-sdk/tools/bin/ 2>&1 | head -20 || true
 
       - name: Build APK
         run: |
