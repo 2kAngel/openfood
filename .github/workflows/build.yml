@@ -38,29 +38,50 @@ jobs:
           python -m pip install --upgrade pip
           pip install buildozer==1.6.0 cython==0.29.37
 
-      - name: Accept Android SDK licenses
+      - name: Clean incomplete SDK cache
         run: |
-          mkdir -p ~/.android && touch ~/.android/repositories.cfg
-          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
-          echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
-          echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ~/.buildozer/android/platform/android-sdk/licenses/android-googletv-license
-          ls -lh ~/.buildozer/android/platform/android-sdk/licenses/ || true
-          ls -R ~/.buildozer/android/platform/android-sdk 2>&1 | head -100 || true
-          find ~/.buildozer -name sdkmanager 2>&1 | head -20 || true
-
-      - name: Fix sdkmanager path for new cmdline-tools
-        run: |
-          ls -lh ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager 2>&1 || echo "tools sdkmanager missing"
-          ls -lh ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager 2>&1 || echo "cmdline-tools sdkmanager missing"
-          if [ ! -f ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager ] && [ -f ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ]; then
-            mkdir -p ~/.buildozer/android/platform/android-sdk/tools/bin
-            ln -sf ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
-            echo "Fixed symlink"
-          fi
-          ls -lh ~/.buildozer/android/platform/android-sdk/tools/bin/ 2>&1 | head -20 || true
+          rm -rf ~/.buildozer/android/platform/android-sdk
+          rm -rf ~/.buildozer/android/platform/android-ndk*
+          ls -lh ~/.buildozer/android/platform/ 2>&1 | head -20 || true
 
       - name: Build APK
+        run: |
+          buildozer android debug || echo "First build attempt finished (may need license fix)"
+
+      - name: Accept Android SDK licenses and fix sdkmanager
+        run: |
+          mkdir -p ~/.android && touch ~/.android/repositories.cfg
+          find ~/.buildozer -name sdkmanager 2>&1 | head -20 || true
+          ls -R ~/.buildozer/android/platform/android-sdk 2>&1 | head -100 || true
+          SDK=~/.buildozer/android/platform/android-sdk
+          if [ -f $SDK/cmdline-tools/latest/bin/sdkmanager ] && [ ! -f $SDK/tools/bin/sdkmanager ]; then
+            mkdir -p $SDK/tools/bin
+            ln -sf $SDK/cmdline-tools/latest/bin/sdkmanager $SDK/tools/bin/sdkmanager
+            echo "Fixed symlink tools->cmdline-tools"
+          fi
+          if [ -f $SDK/cmdline-tools/bin/sdkmanager ] && [ ! -f $SDK/tools/bin/sdkmanager ]; then
+            mkdir -p $SDK/tools/bin
+            ln -sf $SDK/cmdline-tools/bin/sdkmanager $SDK/tools/bin/sdkmanager
+            echo "Fixed symlink tools->cmdline-tools/bin"
+          fi
+          ls -lh $SDK/tools/bin/sdkmanager 2>&1 || echo "sdkmanager still missing"
+          ls -lh $SDK/cmdline-tools/ 2>&1 | head -20 || true
+          mkdir -p $SDK/licenses
+          echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > $SDK/licenses/android-sdk-license
+          echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > $SDK/licenses/android-sdk-preview-license
+          echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > $SDK/licenses/android-googletv-license
+          cat $SDK/licenses/android-sdk-license
+          ls -lh $SDK/licenses/ || true
+          if [ -f $SDK/tools/bin/sdkmanager ]; then
+            yes | $SDK/tools/bin/sdkmanager --sdk_root=$SDK --licenses || true
+            yes | $SDK/tools/bin/sdkmanager --sdk_root=$SDK "build-tools;37.0.0" || true
+            ls -lh $SDK/build-tools/ 2>&1 | head -20 || true
+          fi
+          if [ -f $SDK/cmdline-tools/latest/bin/sdkmanager ]; then
+            yes | $SDK/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK --licenses || true
+          fi
+
+      - name: Build APK (retry)
         run: |
           buildozer android debug
 
