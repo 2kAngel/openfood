@@ -42,25 +42,61 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.buildozer
-          key: buildozer-${{ hashFiles('buildozer.spec') }}-v2
+          key: buildozer-${{ hashFiles('buildozer.spec') }}-v3
           restore-keys: buildozer-
 
-      - name: Vendor freetype (workaround Savannah 502)
+      - name: Vendor freetype (pre-build, if cache warm)
         run: |
           mkdir -p ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/packages/freetype
           mkdir -p ~/.buildozer/android/platform/build-armeabi-v7a/packages/freetype
           mkdir -p ~/.buildozer/android/platform/build-x86_64/packages/freetype
           for d in ~/.buildozer/android/platform/build-*/packages/freetype; do
             cp vendor/freetype-2.14.1.tar.gz "$d/freetype-2.14.1.tar.gz" 2>&1 || true
-            # Create mark so p4a skips download
             touch "$d/.mark-freetype-2.14.1.tar.gz" 2>&1 || true
-            # Also try without dot prefix (p4a variants)
             touch "$d/freetype-2.14.1.tar.gz.mark" 2>&1 || true
-            ls -lh "$d/" 2>&1 | head -5 || true
           done
           ls -lh vendor/freetype-2.14.1.tar.gz
 
-      - name: Build APK
+      - name: Build APK (first attempt)
+        run: |
+          buildozer android debug || echo "First build needs license fix, continuing"
+
+      - name: Fix SDK licenses and vendor freetype (post-SDK)
+        run: |
+          mkdir -p ~/.android && touch ~/.android/repositories.cfg
+          SDK=~/.buildozer/android/platform/android-sdk
+          ls -R $SDK 2>&1 | head -80 || true
+          if [ -f $SDK/cmdline-tools/latest/bin/sdkmanager ] && [ ! -f $SDK/tools/bin/sdkmanager ]; then
+            mkdir -p $SDK/tools/bin
+            ln -sf $SDK/cmdline-tools/latest/bin/sdkmanager $SDK/tools/bin/sdkmanager
+          fi
+          if [ -f $SDK/cmdline-tools/bin/sdkmanager ] && [ ! -f $SDK/tools/bin/sdkmanager ]; then
+            mkdir -p $SDK/tools/bin
+            ln -sf $SDK/cmdline-tools/bin/sdkmanager $SDK/tools/bin/sdkmanager
+          fi
+          mkdir -p $SDK/licenses
+          echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > $SDK/licenses/android-sdk-license
+          echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > $SDK/licenses/android-sdk-preview-license
+          echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > $SDK/licenses/android-googletv-license
+          cat $SDK/licenses/android-sdk-license
+          if [ -f $SDK/tools/bin/sdkmanager ]; then
+            yes | $SDK/tools/bin/sdkmanager --sdk_root=$SDK --licenses || true
+            yes | $SDK/tools/bin/sdkmanager --sdk_root=$SDK "build-tools;37.0.0" || true
+          fi
+          if [ -f $SDK/cmdline-tools/latest/bin/sdkmanager ]; then
+            yes | $SDK/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK --licenses || true
+          fi
+          # Re-vendor freetype now that p4a created build dirs
+          for d in ~/.buildozer/android/platform/build-*/packages/freetype; do
+            mkdir -p "$d"
+            cp vendor/freetype-2.14.1.tar.gz "$d/freetype-2.14.1.tar.gz" 2>&1 || true
+            touch "$d/.mark-freetype-2.14.1.tar.gz" 2>&1 || true
+            touch "$d/freetype-2.14.1.tar.gz.mark" 2>&1 || true
+            ls -lh "$d/" 2>&1 | head -5 || true
+          done
+          # Local recipe override handles Savannah 502
+
+      - name: Build APK (retry)
         run: |
           buildozer android debug
 
