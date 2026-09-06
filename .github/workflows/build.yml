@@ -42,7 +42,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.buildozer
-          key: buildozer-${{ hashFiles('buildozer.spec') }}-v3
+          key: buildozer-${{ hashFiles('buildozer.spec') }}-v4
           restore-keys: buildozer-
 
       - name: Vendor freetype (pre-build, if cache warm)
