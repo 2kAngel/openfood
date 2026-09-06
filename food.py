@@ -18,7 +18,7 @@ from PIL import Image
 
 # ── Config ────────────────────────────────────────────────────────────────────
 GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta"
-MODEL = "gemini-2.5-flash"          # vision-capable, current stable
+MODEL = "gemini-3.5-flash-lite"   # vision, cheapest current stable (Fud AI default)
 MAX_DIM = 1600                      # max longest side (px), same as Fud AI
 JPEG_QUALITY = 80                   # same as Fud AI
 TIMEOUT = 60                        # seconds

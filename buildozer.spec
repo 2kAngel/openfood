@@ -16,6 +16,7 @@ android.accept_sdk_license_agreement = True
 android.ant = auto
 p4a.bootstrap = sdl2
 p4a.port = 8000
+p4a.local_recipes = ./p4a_recipes
 
 [buildozer]
 log_level = 2

@@ -38,65 +38,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install buildozer==1.6.0 cython==0.29.37
 
-      - name: Clean incomplete SDK cache
-        run: |
-          rm -rf ~/.buildozer/android/platform/android-sdk
-          rm -rf ~/.buildozer/android/platform/android-ndk*
-          ls -lh ~/.buildozer/android/platform/ 2>&1 | head -20 || true
+      - name: Cache Buildozer
+        uses: actions/cache@v4
+        with:
+          path: ~/.buildozer
+          key: buildozer-${{ hashFiles('buildozer.spec') }}-v2
+          restore-keys: buildozer-
 
-      - name: Pre-download freetype workaround (Savannah 502)
+      - name: Vendor freetype (workaround Savannah 502)
         run: |
           mkdir -p ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/packages/freetype
-          echo "Trying alternative mirrors for freetype..."
-          wget -q https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.14.1.tar.gz -O /tmp/freetype-2.14.1.tar.gz && echo "Savannah mirror OK" || \
-          wget -q https://downloads.sourceforge.net/project/freetype/freetype2/2.14.1/freetype-2.14.1.tar.gz -O /tmp/freetype-2.14.1.tar.gz && echo "SourceForge OK" || \
-          wget -q https://github.com/freetype/freetype/archive/VER-2-14-1.tar.gz -O /tmp/freetype-2.14.1.tar.gz && echo "GitHub OK" || echo "All mirrors failed"
-          if [ -f /tmp/freetype-2.14.1.tar.gz ]; then
-            cp /tmp/freetype-2.14.1.tar.gz ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/packages/freetype/freetype-2.14.1.tar.gz || true
-            ls -lh ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/packages/freetype/ || true
-            ls -lh /tmp/freetype-2.14.1.tar.gz || true
-          fi
-          mkdir -p ~/.buildozer/android/platform/build-armeabi-v7a/packages/freetype 2>&1 || true
-          cp /tmp/freetype-2.14.1.tar.gz ~/.buildozer/android/platform/build-armeabi-v7a/packages/freetype/freetype-2.14.1.tar.gz 2>&1 || true
+          mkdir -p ~/.buildozer/android/platform/build-armeabi-v7a/packages/freetype
+          mkdir -p ~/.buildozer/android/platform/build-x86_64/packages/freetype
+          for d in ~/.buildozer/android/platform/build-*/packages/freetype; do
+            cp vendor/freetype-2.14.1.tar.gz "$d/freetype-2.14.1.tar.gz" 2>&1 || true
+            # Create mark so p4a skips download
+            touch "$d/.mark-freetype-2.14.1.tar.gz" 2>&1 || true
+            # Also try without dot prefix (p4a variants)
+            touch "$d/freetype-2.14.1.tar.gz.mark" 2>&1 || true
+            ls -lh "$d/" 2>&1 | head -5 || true
+          done
+          ls -lh vendor/freetype-2.14.1.tar.gz
 
       - name: Build APK
-        run: |
-          buildozer android debug || echo "First build attempt finished (may need license fix)"
-
-      - name: Accept Android SDK licenses and fix sdkmanager
-        run: |
-          mkdir -p ~/.android && touch ~/.android/repositories.cfg
-          find ~/.buildozer -name sdkmanager 2>&1 | head -20 || true
-          ls -R ~/.buildozer/android/platform/android-sdk 2>&1 | head -100 || true
-          SDK=~/.buildozer/android/platform/android-sdk
-          if [ -f $SDK/cmdline-tools/latest/bin/sdkmanager ] && [ ! -f $SDK/tools/bin/sdkmanager ]; then
-            mkdir -p $SDK/tools/bin
-            ln -sf $SDK/cmdline-tools/latest/bin/sdkmanager $SDK/tools/bin/sdkmanager
-            echo "Fixed symlink tools->cmdline-tools"
-          fi
-          if [ -f $SDK/cmdline-tools/bin/sdkmanager ] && [ ! -f $SDK/tools/bin/sdkmanager ]; then
-            mkdir -p $SDK/tools/bin
-            ln -sf $SDK/cmdline-tools/bin/sdkmanager $SDK/tools/bin/sdkmanager
-            echo "Fixed symlink tools->cmdline-tools/bin"
-          fi
-          ls -lh $SDK/tools/bin/sdkmanager 2>&1 || echo "sdkmanager still missing"
-          ls -lh $SDK/cmdline-tools/ 2>&1 | head -20 || true
-          mkdir -p $SDK/licenses
-          echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > $SDK/licenses/android-sdk-license
-          echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > $SDK/licenses/android-sdk-preview-license
-          echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > $SDK/licenses/android-googletv-license
-          cat $SDK/licenses/android-sdk-license
-          ls -lh $SDK/licenses/ || true
-          if [ -f $SDK/tools/bin/sdkmanager ]; then
-            yes | $SDK/tools/bin/sdkmanager --sdk_root=$SDK --licenses || true
-            yes | $SDK/tools/bin/sdkmanager --sdk_root=$SDK "build-tools;37.0.0" || true
-            ls -lh $SDK/build-tools/ 2>&1 | head -20 || true
-          fi
-          if [ -f $SDK/cmdline-tools/latest/bin/sdkmanager ]; then
-            yes | $SDK/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK --licenses || true
-          fi
-
-      - name: Build APK (retry)
         run: |
           buildozer android debug
 
@@ -108,9 +72,7 @@ jobs:
             echo "ERROR: No APK found in bin/"
             exit 1
           fi
-          echo "APK found:"
           ls -lh bin/*.apk
-          find bin -type f -name "*.apk" -exec ls -lh {} \;
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
@@ -118,3 +80,19 @@ jobs:
           name: openfood-apk
           path: bin/*.apk
           if-no-files-found: error
+
+      - name: Create GitHub Release (on push to main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: OpenFood build ${{ github.run_number }}
+          body: |
+            APK auto-build desde main.
+            - Commit: ${{ github.sha }}
+            - Modelo: gemini-3.5-flash-lite (Fud AI)
+            - Instala el APK y pon tu GEMINI_API_KEY en la app.
+          files: bin/*.apk
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
