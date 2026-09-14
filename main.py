@@ -9,6 +9,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image as KivyImage
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.togglebutton import ToggleButton
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.utils import platform
@@ -26,10 +27,20 @@ class FoodApp(App):
         self.store = JsonStore(STORE_PATH)
         self.selected_image = None
         self.api_key = self.store.get("config")["api_key"] if self.store.exists("config") else ""
+        self.mode = self.store.get("config")["mode"] if self.store.exists("config") and "mode" in self.store.get("config") else "local"
 
         root = BoxLayout(orientation="vertical", padding=12, spacing=10)
 
         root.add_widget(Label(text="[b]OpenFood[/b]\nHaz una foto y calcula calorias", markup=True, size_hint_y=None, height=50, font_size=18))
+
+        mode_row = BoxLayout(size_hint_y=None, height=44, spacing=8)
+        self.btn_local = ToggleButton(text="Offline (Local)", group="mode", state="down" if self.mode == "local" else "normal", background_color=(0.2,0.6,0.86,1) if self.mode == "local" else (0.5,0.5,0.5,1))
+        self.btn_online = ToggleButton(text="Online (Gemini)", group="mode", state="down" if self.mode == "online" else "normal", background_color=(0.2,0.6,0.86,1) if self.mode == "online" else (0.5,0.5,0.5,1))
+        self.btn_local.bind(on_press=self.on_mode_local)
+        self.btn_online.bind(on_press=self.on_mode_online)
+        mode_row.add_widget(self.btn_local)
+        mode_row.add_widget(self.btn_online)
+        root.add_widget(mode_row)
 
         self.api_input = TextInput(
             hint_text="GEMINI_API_KEY (aistudio.google.com/apikey)",
@@ -41,6 +52,7 @@ class FoodApp(App):
         )
         self.api_input.bind(text=self.on_api_key)
         root.add_widget(self.api_input)
+        self._update_api_visibility()
 
         btn_row = BoxLayout(size_hint_y=None, height=50, spacing=8)
         self.btn_gallery = Button(text="Galeria", background_color=(0.2,0.6,0.86,1))
@@ -71,15 +83,42 @@ class FoodApp(App):
         scroll.add_widget(self.result_box)
         root.add_widget(scroll)
 
+        self._refresh_analyze_btn()
         return root
+
+    def on_mode_local(self, *a):
+        self.mode = "local"
+        self._save_mode()
+        self._update_api_visibility()
+        self._refresh_analyze_btn()
+        self.set_status("Modo Offline: sin API key, 101 platos")
+
+    def on_mode_online(self, *a):
+        self.mode = "online"
+        self._save_mode()
+        self._update_api_visibility()
+        self._refresh_analyze_btn()
+        self.set_status("Modo Online: requiere API key")
+
+    def _save_mode(self):
+        self.store.put("config", api_key=self.api_key, mode=self.mode)
+
+    def _update_api_visibility(self):
+        is_local = self.mode == "local"
+        self.api_input.disabled = is_local
+        self.api_input.opacity = 0.4 if is_local else 1
+        self.api_input.hint_text = "No requerido en modo Offline" if is_local else "GEMINI_API_KEY (aistudio.google.com/apikey)"
 
     def on_api_key(self, inst, val):
         self.api_key = val.strip()
-        self.store.put("config", api_key=self.api_key)
+        self.store.put("config", api_key=self.api_key, mode=self.mode)
         self._refresh_analyze_btn()
 
     def _refresh_analyze_btn(self):
-        self.btn_analyze.disabled = not (self.selected_image and self.api_key)
+        if self.mode == "local":
+            self.btn_analyze.disabled = not bool(self.selected_image)
+        else:
+            self.btn_analyze.disabled = not (self.selected_image and self.api_key)
 
     def pick_gallery(self, *a):
         try:
@@ -99,7 +138,6 @@ class FoodApp(App):
     def take_photo(self, *a):
         try:
             from plyer import camera
-            # Sin parámetro filename: Plyer guarda en ubicación temporal pública adecuada para Android
             camera.take_picture(on_complete=self.on_camera_done)
         except Exception as e:
             self.set_status(f"Error camara: {e}. Usa Galeria", error=True)
@@ -121,18 +159,28 @@ class FoodApp(App):
         Clock.schedule_once(lambda dt: setattr(self.status, "color", (1,0.3,0.3,1) if error else (0.2,0.6,0.2,1)))
 
     def do_analyze(self, *a):
-        if not self.selected_image or not self.api_key:
-            self.set_status("Falta foto o API key", error=True)
+        if not self.selected_image:
+            self.set_status("Falta foto", error=True)
+            return
+        if self.mode == "online" and not self.api_key:
+            self.set_status("Falta API key (cambia a Offline si no tienes)", error=True)
             return
         self.btn_analyze.disabled = True
         self.btn_analyze.text = "ANALIZANDO..."
-        self.set_status("Enviando a Gemini...")
+        if self.mode == "local":
+            self.set_status("Analizando offline...")
+        else:
+            self.set_status("Enviando a Gemini...")
         self.result_label.text = "[i]Analizando, espera...[/i]"
         threading.Thread(target=self._analyze_thread, daemon=True).start()
 
     def _analyze_thread(self):
         try:
-            data = analyze_image(self.selected_image, self.api_key)
+            if self.mode == "local":
+                from local_model import classify_image_local
+                data = classify_image_local(self.selected_image)
+            else:
+                data = analyze_image(self.selected_image, self.api_key)
             text = format_results(data)
             pretty = self._format_pretty(data, text)
             Clock.schedule_once(lambda dt: self.show_result(pretty, data))

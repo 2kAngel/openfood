@@ -1,0 +1,986 @@
+{
+  "apple_pie": {
+    "name": "Tarta de Manzana",
+    "calories": 375,
+    "protein": 4.4,
+    "carbs": 40.9,
+    "fat": 20.4,
+    "serving_size_grams": 100,
+    "ingredients": []
+  },
+  "baby_back_ribs": {
+    "name": "Costillas BBQ",
+    "calories": 243,
+    "protein": 19.4,
+    "carbs": 5.7,
+    "fat": 25.6,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "baklava": {
+    "name": "Baklava",
+    "calories": 157,
+    "protein": 14.6,
+    "carbs": 34.5,
+    "fat": 15.2,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "beef_carpaccio": {
+    "name": "Carpaccio de Ternera",
+    "calories": 373,
+    "protein": 21.7,
+    "carbs": 8.9,
+    "fat": 10.8,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "beef_tartare": {
+    "name": "Steak Tartar",
+    "calories": 326,
+    "protein": 23.9,
+    "carbs": 2.8,
+    "fat": 19.2,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "beet_salad": {
+    "name": "Ensalada de Remolacha",
+    "calories": 135,
+    "protein": 5.0,
+    "carbs": 6.7,
+    "fat": 9.0,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "beignets": {
+    "name": "Beignets",
+    "calories": 192,
+    "protein": 10.3,
+    "carbs": 28.9,
+    "fat": 12.0,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "bibimbap": {
+    "name": "Bibimbap",
+    "calories": 256,
+    "protein": 4.3,
+    "carbs": 18.2,
+    "fat": 9.8,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "bread_pudding": {
+    "name": "Pudin de Pan",
+    "calories": 174,
+    "protein": 6.1,
+    "carbs": 22.3,
+    "fat": 13.9,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "breakfast_burrito": {
+    "name": "Burrito de Desayuno",
+    "calories": 528,
+    "protein": 23.5,
+    "carbs": 29.8,
+    "fat": 11.1,
+    "serving_size_grams": 300,
+    "ingredients": []
+  },
+  "bruschetta": {
+    "name": "Bruschetta",
+    "calories": 249,
+    "protein": 13.0,
+    "carbs": 25.2,
+    "fat": 12.5,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "caesar_salad": {
+    "name": "Ensalada Cesar",
+    "calories": 86,
+    "protein": 4.0,
+    "carbs": 10.4,
+    "fat": 10.0,
+    "serving_size_grams": 150,
+    "ingredients": [
+      {
+        "name": "Lechuga romana",
+        "grams": 80,
+        "calories": 14,
+        "protein": 1.0,
+        "carbs": 2.5,
+        "fat": 0.2
+      },
+      {
+        "name": "Pollo a la plancha",
+        "grams": 60,
+        "calories": 100,
+        "protein": 15.0,
+        "carbs": 0.0,
+        "fat": 3.5
+      },
+      {
+        "name": "Aderezo cesar",
+        "grams": 30,
+        "calories": 140,
+        "protein": 0.5,
+        "carbs": 1.0,
+        "fat": 14.0
+      }
+    ]
+  },
+  "cannoli": {
+    "name": "Cannoli",
+    "calories": 316,
+    "protein": 3.3,
+    "carbs": 32.3,
+    "fat": 14.9,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "caprese_salad": {
+    "name": "Ensalada Caprese",
+    "calories": 164,
+    "protein": 4.1,
+    "carbs": 10.4,
+    "fat": 5.4,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "carrot_cake": {
+    "name": "Tarta de Zanahoria",
+    "calories": 414,
+    "protein": 4.4,
+    "carbs": 37.7,
+    "fat": 17.9,
+    "serving_size_grams": 100,
+    "ingredients": []
+  },
+  "ceviche": {
+    "name": "Ceviche",
+    "calories": 95,
+    "protein": 2.3,
+    "carbs": 8.8,
+    "fat": 11.1,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "cheese_plate": {
+    "name": "Tabla de Quesos",
+    "calories": 312,
+    "protein": 14.4,
+    "carbs": 24.3,
+    "fat": 11.7,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "cheesecake": {
+    "name": "Tarta de Queso",
+    "calories": 353,
+    "protein": 4.9,
+    "carbs": 40.9,
+    "fat": 19.5,
+    "serving_size_grams": 120,
+    "ingredients": []
+  },
+  "chicken_curry": {
+    "name": "Pollo al Curry",
+    "calories": 278,
+    "protein": 27.1,
+    "carbs": 5.2,
+    "fat": 13.9,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "chicken_quesadilla": {
+    "name": "Quesadilla de Pollo",
+    "calories": 504,
+    "protein": 26.5,
+    "carbs": 42.3,
+    "fat": 18.3,
+    "serving_size_grams": 350,
+    "ingredients": []
+  },
+  "chicken_wings": {
+    "name": "Alitas de Pollo",
+    "calories": 408,
+    "protein": 34.4,
+    "carbs": 2.4,
+    "fat": 23.3,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "chocolate_cake": {
+    "name": "Tarta de Chocolate",
+    "calories": 412,
+    "protein": 4.8,
+    "carbs": 35.3,
+    "fat": 18.8,
+    "serving_size_grams": 120,
+    "ingredients": []
+  },
+  "chocolate_mousse": {
+    "name": "Mousse de Chocolate",
+    "calories": 317,
+    "protein": 4.2,
+    "carbs": 31.3,
+    "fat": 17.4,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "churros": {
+    "name": "Churros",
+    "calories": 406,
+    "protein": 3.5,
+    "carbs": 48.2,
+    "fat": 14.2,
+    "serving_size_grams": 120,
+    "ingredients": []
+  },
+  "clam_chowder": {
+    "name": "Sopa de Almejas",
+    "calories": 337,
+    "protein": 5.8,
+    "carbs": 19.7,
+    "fat": 11.4,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "club_sandwich": {
+    "name": "Club Sandwich",
+    "calories": 650,
+    "protein": 25.8,
+    "carbs": 48.2,
+    "fat": 16.3,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "crab_cakes": {
+    "name": "Pasteles de Cangrejo",
+    "calories": 301,
+    "protein": 3.2,
+    "carbs": 36.7,
+    "fat": 18.1,
+    "serving_size_grams": 100,
+    "ingredients": []
+  },
+  "creme_brulee": {
+    "name": "Creme Brulee",
+    "calories": 311,
+    "protein": 12.0,
+    "carbs": 33.7,
+    "fat": 12.6,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "croque_madame": {
+    "name": "Croque Madame",
+    "calories": 188,
+    "protein": 12.0,
+    "carbs": 12.9,
+    "fat": 17.0,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "cup_cakes": {
+    "name": "Cupcakes",
+    "calories": 416,
+    "protein": 6.2,
+    "carbs": 30.3,
+    "fat": 21.2,
+    "serving_size_grams": 100,
+    "ingredients": []
+  },
+  "deviled_eggs": {
+    "name": "Huevos Rellenos",
+    "calories": 326,
+    "protein": 10.9,
+    "carbs": 26.7,
+    "fat": 12.0,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "donuts": {
+    "name": "Donas",
+    "calories": 370,
+    "protein": 4.7,
+    "carbs": 47.2,
+    "fat": 18.5,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "dumplings": {
+    "name": "Dumplings",
+    "calories": 267,
+    "protein": 6.7,
+    "carbs": 13.2,
+    "fat": 10.9,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "edamame": {
+    "name": "Edamame",
+    "calories": 140,
+    "protein": 5.3,
+    "carbs": 10.7,
+    "fat": 6.1,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "eggs_benedict": {
+    "name": "Huevos Benedict",
+    "calories": 289,
+    "protein": 12.6,
+    "carbs": 19.0,
+    "fat": 7.4,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "escargots": {
+    "name": "Escargots",
+    "calories": 293,
+    "protein": 14.7,
+    "carbs": 10.0,
+    "fat": 8.8,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "falafel": {
+    "name": "Falafel",
+    "calories": 264,
+    "protein": 14.0,
+    "carbs": 26.2,
+    "fat": 17.9,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "filet_mignon": {
+    "name": "Filet Mignon",
+    "calories": 429,
+    "protein": 22.2,
+    "carbs": 4.5,
+    "fat": 17.6,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "fish_and_chips": {
+    "name": "Pescado con Papas",
+    "calories": 325,
+    "protein": 31.8,
+    "carbs": 8.3,
+    "fat": 13.0,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "foie_gras": {
+    "name": "Foie Gras",
+    "calories": 332,
+    "protein": 5.2,
+    "carbs": 30.7,
+    "fat": 6.6,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "french_fries": {
+    "name": "Papas Fritas",
+    "calories": 316,
+    "protein": 7.6,
+    "carbs": 30.0,
+    "fat": 24.6,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "french_onion_soup": {
+    "name": "Sopa de Cebolla",
+    "calories": 264,
+    "protein": 8.0,
+    "carbs": 28.7,
+    "fat": 10.0,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "french_toast": {
+    "name": "Tostada Francesa",
+    "calories": 311,
+    "protein": 8.2,
+    "carbs": 26.4,
+    "fat": 16.5,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "fried_calamari": {
+    "name": "Calamares Fritos",
+    "calories": 382,
+    "protein": 7.3,
+    "carbs": 45.0,
+    "fat": 19.3,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "fried_rice": {
+    "name": "Arroz Frito",
+    "calories": 322,
+    "protein": 24.8,
+    "carbs": 44.3,
+    "fat": 15.0,
+    "serving_size_grams": 300,
+    "ingredients": []
+  },
+  "frozen_yogurt": {
+    "name": "Yogurt Helado",
+    "calories": 292,
+    "protein": 6.7,
+    "carbs": 32.3,
+    "fat": 10.8,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "garlic_bread": {
+    "name": "Pan de Ajo",
+    "calories": 275,
+    "protein": 12.4,
+    "carbs": 33.1,
+    "fat": 17.7,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "gnocchi": {
+    "name": "Gnocchi",
+    "calories": 169,
+    "protein": 12.8,
+    "carbs": 16.4,
+    "fat": 13.9,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "greek_salad": {
+    "name": "Ensalada Griega",
+    "calories": 155,
+    "protein": 3.9,
+    "carbs": 11.8,
+    "fat": 5.7,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "grilled_cheese_sandwich": {
+    "name": "Sandwich de Queso",
+    "calories": 425,
+    "protein": 13.3,
+    "carbs": 32.7,
+    "fat": 20.9,
+    "serving_size_grams": 350,
+    "ingredients": []
+  },
+  "grilled_salmon": {
+    "name": "Salmon a la Parrilla",
+    "calories": 408,
+    "protein": 34.6,
+    "carbs": 8.3,
+    "fat": 25.4,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "guacamole": {
+    "name": "Guacamole",
+    "calories": 310,
+    "protein": 8.8,
+    "carbs": 21.3,
+    "fat": 14.3,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "gyoza": {
+    "name": "Gyoza",
+    "calories": 225,
+    "protein": 5.8,
+    "carbs": 26.8,
+    "fat": 17.5,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "hamburger": {
+    "name": "Hamburguesa",
+    "calories": 629,
+    "protein": 29.6,
+    "carbs": 48.2,
+    "fat": 18.9,
+    "serving_size_grams": 300,
+    "ingredients": [
+      {
+        "name": "Pan de hamburguesa",
+        "grams": 70,
+        "calories": 190,
+        "protein": 5.0,
+        "carbs": 32.0,
+        "fat": 3.0
+      },
+      {
+        "name": "Carne de vacuno",
+        "grams": 120,
+        "calories": 250,
+        "protein": 20.0,
+        "carbs": 0.0,
+        "fat": 18.0
+      },
+      {
+        "name": "Queso cheddar",
+        "grams": 20,
+        "calories": 80,
+        "protein": 5.0,
+        "carbs": 1.0,
+        "fat": 6.5
+      }
+    ]
+  },
+  "hot_and_sour_soup": {
+    "name": "Sopa Agridulce",
+    "calories": 306,
+    "protein": 5.8,
+    "carbs": 14.7,
+    "fat": 13.5,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "hot_dog": {
+    "name": "Hot Dog",
+    "calories": 315,
+    "protein": 7.1,
+    "carbs": 23.5,
+    "fat": 17.8,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "huevos_rancheros": {
+    "name": "Huevos Rancheros",
+    "calories": 305,
+    "protein": 9.4,
+    "carbs": 11.1,
+    "fat": 12.1,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "hummus": {
+    "name": "Hummus",
+    "calories": 91,
+    "protein": 3.5,
+    "carbs": 9.5,
+    "fat": 7.0,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "ice_cream": {
+    "name": "Helado",
+    "calories": 196,
+    "protein": 7.0,
+    "carbs": 19.5,
+    "fat": 10.0,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "lasagna": {
+    "name": "Lasana",
+    "calories": 378,
+    "protein": 29.3,
+    "carbs": 39.1,
+    "fat": 17.9,
+    "serving_size_grams": 350,
+    "ingredients": []
+  },
+  "lobster_bisque": {
+    "name": "Bisque de Langosta",
+    "calories": 428,
+    "protein": 29.3,
+    "carbs": 7.6,
+    "fat": 21.4,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "lobster_roll_sandwich": {
+    "name": "Roll de Langosta",
+    "calories": 612,
+    "protein": 16.7,
+    "carbs": 58.2,
+    "fat": 23.0,
+    "serving_size_grams": 300,
+    "ingredients": []
+  },
+  "macaroni_and_cheese": {
+    "name": "Macarrones con Queso",
+    "calories": 221,
+    "protein": 13.8,
+    "carbs": 20.7,
+    "fat": 8.5,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "macarons": {
+    "name": "Macarons",
+    "calories": 294,
+    "protein": 5.5,
+    "carbs": 15.9,
+    "fat": 14.7,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "miso_soup": {
+    "name": "Sopa Miso",
+    "calories": 205,
+    "protein": 10.3,
+    "carbs": 14.6,
+    "fat": 17.0,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "mussels": {
+    "name": "Mejillones",
+    "calories": 312,
+    "protein": 18.3,
+    "carbs": 7.3,
+    "fat": 17.6,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "nachos": {
+    "name": "Nachos",
+    "calories": 481,
+    "protein": 3.3,
+    "carbs": 31.7,
+    "fat": 24.1,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "omelette": {
+    "name": "Tortilla",
+    "calories": 163,
+    "protein": 11.0,
+    "carbs": 34.1,
+    "fat": 17.5,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "onion_rings": {
+    "name": "Aros de Cebolla",
+    "calories": 380,
+    "protein": 7.0,
+    "carbs": 44.1,
+    "fat": 22.3,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "oysters": {
+    "name": "Ostras",
+    "calories": 293,
+    "protein": 31.0,
+    "carbs": 5.3,
+    "fat": 11.3,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "pad_thai": {
+    "name": "Pad Thai",
+    "calories": 391,
+    "protein": 29.2,
+    "carbs": 38.6,
+    "fat": 24.3,
+    "serving_size_grams": 350,
+    "ingredients": []
+  },
+  "paella": {
+    "name": "Paella",
+    "calories": 446,
+    "protein": 22.7,
+    "carbs": 50.4,
+    "fat": 24.4,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "pancakes": {
+    "name": "Panqueques",
+    "calories": 339,
+    "protein": 3.7,
+    "carbs": 35.6,
+    "fat": 14.7,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "panna_cotta": {
+    "name": "Panna Cotta",
+    "calories": 303,
+    "protein": 5.0,
+    "carbs": 13.5,
+    "fat": 13.1,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "peking_duck": {
+    "name": "Pato Pekines",
+    "calories": 305,
+    "protein": 14.1,
+    "carbs": 26.9,
+    "fat": 10.6,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "pho": {
+    "name": "Pho",
+    "calories": 437,
+    "protein": 11.8,
+    "carbs": 55.4,
+    "fat": 12.4,
+    "serving_size_grams": 300,
+    "ingredients": []
+  },
+  "pizza": {
+    "name": "Pizza",
+    "calories": 569,
+    "protein": 23.8,
+    "carbs": 50.5,
+    "fat": 23.0,
+    "serving_size_grams": 250,
+    "ingredients": [
+      {
+        "name": "Masa de pizza",
+        "grams": 150,
+        "calories": 400,
+        "protein": 6.0,
+        "carbs": 55.0,
+        "fat": 4.0
+      },
+      {
+        "name": "Queso mozzarella",
+        "grams": 60,
+        "calories": 180,
+        "protein": 12.0,
+        "carbs": 1.5,
+        "fat": 14.0
+      },
+      {
+        "name": "Salsa de tomate",
+        "grams": 40,
+        "calories": 20,
+        "protein": 0.8,
+        "carbs": 4.0,
+        "fat": 0.2
+      }
+    ]
+  },
+  "pork_chop": {
+    "name": "Chuleta de Cerdo",
+    "calories": 239,
+    "protein": 30.0,
+    "carbs": 6.7,
+    "fat": 12.2,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "poutine": {
+    "name": "Poutine",
+    "calories": 443,
+    "protein": 5.4,
+    "carbs": 32.0,
+    "fat": 19.7,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "prime_rib": {
+    "name": "Prime Rib",
+    "calories": 472,
+    "protein": 20.5,
+    "carbs": 5.4,
+    "fat": 21.0,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "pulled_pork_sandwich": {
+    "name": "Sandwich de Cerdo",
+    "calories": 478,
+    "protein": 24.1,
+    "carbs": 30.0,
+    "fat": 22.8,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "ramen": {
+    "name": "Ramen",
+    "calories": 500,
+    "protein": 24.7,
+    "carbs": 54.5,
+    "fat": 20.1,
+    "serving_size_grams": 300,
+    "ingredients": []
+  },
+  "ravioli": {
+    "name": "Raviolis",
+    "calories": 346,
+    "protein": 6.2,
+    "carbs": 19.2,
+    "fat": 12.3,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "red_velvet_cake": {
+    "name": "Tarta Red Velvet",
+    "calories": 284,
+    "protein": 5.5,
+    "carbs": 42.8,
+    "fat": 20.8,
+    "serving_size_grams": 120,
+    "ingredients": []
+  },
+  "risotto": {
+    "name": "Risotto",
+    "calories": 390,
+    "protein": 19.8,
+    "carbs": 29.6,
+    "fat": 10.8,
+    "serving_size_grams": 350,
+    "ingredients": []
+  },
+  "samosa": {
+    "name": "Samosa",
+    "calories": 195,
+    "protein": 7.1,
+    "carbs": 16.4,
+    "fat": 13.4,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "sashimi": {
+    "name": "Sashimi",
+    "calories": 349,
+    "protein": 13.9,
+    "carbs": 17.2,
+    "fat": 6.7,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "scallops": {
+    "name": "Vieiras",
+    "calories": 434,
+    "protein": 31.1,
+    "carbs": 9.8,
+    "fat": 17.6,
+    "serving_size_grams": 180,
+    "ingredients": []
+  },
+  "seaweed_salad": {
+    "name": "Ensalada de Algas",
+    "calories": 122,
+    "protein": 7.4,
+    "carbs": 4.8,
+    "fat": 11.3,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "shrimp_and_grits": {
+    "name": "Camarones con Grits",
+    "calories": 195,
+    "protein": 12.0,
+    "carbs": 19.6,
+    "fat": 15.5,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "spaghetti_bolognese": {
+    "name": "Espaguetis Bolognesa",
+    "calories": 477,
+    "protein": 24.0,
+    "carbs": 40.1,
+    "fat": 14.1,
+    "serving_size_grams": 350,
+    "ingredients": []
+  },
+  "spaghetti_carbonara": {
+    "name": "Espaguetis Carbonara",
+    "calories": 645,
+    "protein": 15.8,
+    "carbs": 48.6,
+    "fat": 12.1,
+    "serving_size_grams": 300,
+    "ingredients": []
+  },
+  "spring_rolls": {
+    "name": "Rollitos de Primavera",
+    "calories": 169,
+    "protein": 15.0,
+    "carbs": 23.1,
+    "fat": 6.4,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "steak": {
+    "name": "Bistec",
+    "calories": 222,
+    "protein": 34.1,
+    "carbs": 6.3,
+    "fat": 19.9,
+    "serving_size_grams": 200,
+    "ingredients": []
+  },
+  "strawberry_shortcake": {
+    "name": "Tarta de Fresa",
+    "calories": 405,
+    "protein": 4.3,
+    "carbs": 43.3,
+    "fat": 15.6,
+    "serving_size_grams": 120,
+    "ingredients": []
+  },
+  "sushi": {
+    "name": "Sushi",
+    "calories": 457,
+    "protein": 22.1,
+    "carbs": 52.2,
+    "fat": 11.5,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "tacos": {
+    "name": "Tacos",
+    "calories": 407,
+    "protein": 27.0,
+    "carbs": 45.7,
+    "fat": 23.3,
+    "serving_size_grams": 300,
+    "ingredients": []
+  },
+  "takoyaki": {
+    "name": "Takoyaki",
+    "calories": 250,
+    "protein": 15.0,
+    "carbs": 22.5,
+    "fat": 13.9,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "tiramisu": {
+    "name": "Tiramisu",
+    "calories": 398,
+    "protein": 6.5,
+    "carbs": 30.1,
+    "fat": 15.9,
+    "serving_size_grams": 150,
+    "ingredients": []
+  },
+  "tuna_tartare": {
+    "name": "Tartar de Atun",
+    "calories": 270,
+    "protein": 29.7,
+    "carbs": 9.5,
+    "fat": 12.7,
+    "serving_size_grams": 250,
+    "ingredients": []
+  },
+  "waffles": {
+    "name": "Waffles",
+    "calories": 261,
+    "protein": 8.1,
+    "carbs": 14.7,
+    "fat": 17.8,
+    "serving_size_grams": 200,
+    "ingredients": []
+  }
+}
