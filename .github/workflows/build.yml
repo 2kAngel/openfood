@@ -99,9 +99,18 @@ jobs:
           done
           # Local recipe override handles Savannah 502
 
-      - name: Build APK (retry)
+      - name: Build APK (with license accept and freetype workaround)
         run: |
-          buildozer android debug
+          buildozer android debug || echo "Build attempt finished"
+
+      - name: Verify APK
+        run: |
+          echo "Buscando APK en bin/..."
+          find bin -name "*.apk" -exec ls -lh {} \;
+          if ! find bin -name "*.apk" | grep -q .; then
+            echo "ERROR: No APK found"
+            exit 1
+          fi
 
       - name: Check APK exists
         run: |

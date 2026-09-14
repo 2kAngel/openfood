@@ -65,17 +65,13 @@ class FoodApp(App):
         self.result_box = GridLayout(cols=1, size_hint_y=None, spacing=6, padding=8)
         self.result_box.bind(minimum_height=self.result_box.setter("height"))
         self.result_label = Label(text="", markup=True, size_hint_y=None, halign="left", valign="top")
-        self.result_label.bind(texture_size=self._update_label_height)
-        self.result_label.bind(width=lambda *x: self.result_label.setter("text_size")(self.result_label, (self.result_label.width, None)))
+        self.result_label.bind(width=lambda inst, val: setattr(inst, "text_size", (val, None)))
+        self.result_label.bind(texture_size=lambda inst, val: setattr(inst, "height", val[1]))
         self.result_box.add_widget(self.result_label)
         scroll.add_widget(self.result_box)
         root.add_widget(scroll)
 
         return root
-
-    def _update_label_height(self, inst, size):
-        inst.height = size[1]
-        inst.text_size = (inst.width, None)
 
     def on_api_key(self, inst, val):
         self.api_key = val.strip()
@@ -103,9 +99,8 @@ class FoodApp(App):
     def take_photo(self, *a):
         try:
             from plyer import camera
-            tmp = os.path.join(self.user_data_dir, "capture.jpg") if hasattr(self, "user_data_dir") else "/tmp/capture.jpg"
-            os.makedirs(os.path.dirname(tmp), exist_ok=True)
-            camera.take_picture(filename=tmp, on_complete=self.on_camera_done)
+            # Sin parámetro filename: Plyer guarda en ubicación temporal pública adecuada para Android
+            camera.take_picture(on_complete=self.on_camera_done)
         except Exception as e:
             self.set_status(f"Error camara: {e}. Usa Galeria", error=True)
 
